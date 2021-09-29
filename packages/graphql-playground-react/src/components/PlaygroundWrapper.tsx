@@ -438,6 +438,7 @@ class PlaygroundWrapper extends React.Component<
               }
               createApolloLink={this.props.createApolloLink}
               schema={this.state.schema}
+              selectedEnvironment={this.state.selectedEnvironment}
             />
           </App>
         </ThemeProvider>

@@ -20,7 +20,7 @@ export interface ReduxProps {
 export interface State {
   overCross: boolean
   editingName: boolean
-}
+} 
 
 class Tab extends React.PureComponent<Props & ReduxProps, State> {
   constructor(props) {
@@ -32,9 +32,14 @@ class Tab extends React.PureComponent<Props & ReduxProps, State> {
     }
   }
 
+  checkHeadersForEnvironment(h: string) {
+    const headers = JSON.parse(h);
+    if (headers['x-gadget-environment']) return headers['x-gadget-environment'];
+  }
+
   render() {
     const { session, selectedSessionId } = this.props
-    const { queryTypes } = session
+    const { queryTypes, headers } = session
 
     const active = session.id === selectedSessionId
 
@@ -44,8 +49,10 @@ class Tab extends React.PureComponent<Props & ReduxProps, State> {
       queryTypes.firstOperationName ||
       'New Tab'
 
+    const selectedEnvironment = this.checkHeadersForEnvironment(headers);
+
     return (
-      <TabItem active={active} onMouseDown={this.handleSelectSession}>
+      <TabItem active={active} onMouseDown={this.handleSelectSession} isProduction={selectedEnvironment == "Production"}>
         <Icons active={active}>
           {session.subscriptionActive && <RedDot />}
           <QueryTypes>
@@ -156,10 +163,16 @@ const TabItem = styled<TabItemProps, 'div'>('div')`
   box-sizing: border-box;
   cursor: pointer;
   user-select: none;
-  background: ${p =>
-    p.active ? p.theme.editorColours.tab : p.theme.editorColours.tabInactive};
+  background: ${p => { 
+    if (p.isProduction) return "blue";
+      return p.active ? p.theme.editorColours.tab : p.theme.editorColours.tabInactive;
+    }
+  };
   &:hover {
-    background: ${p => p.theme.editorColours.tab};
+    background: ${p => {
+      if (p.isProduction) return "blue";
+      return p.theme.editorColours.tab;
+    }};
     .close {
       opacity: 1;
     }

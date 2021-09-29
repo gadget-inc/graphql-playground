@@ -92,6 +92,7 @@ export interface Props {
   ) => ApolloLink
   workspaceName?: string
   schema?: GraphQLSchema
+  selectedEnvironment: string
 }
 
 export interface ReduxProps {
@@ -310,7 +311,7 @@ export class Playground extends React.PureComponent<Props & ReduxProps, State> {
 
     return (
       <PlaygroundContainer className="playground">
-        <TabBar onNewSession={this.createSession} isApp={this.props.isApp} />
+        <TabBar onNewSession={this.createSession} isApp={this.props.isApp} selectedEnvironment={this.props.selectedEnvironment} />
         <GraphiqlsContainer>
           <GraphiqlWrapper className="graphiql-wrapper active">
             {this.props.isConfigTab ? (

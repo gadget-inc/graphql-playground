@@ -20,6 +20,7 @@ import {
 export interface Props {
   onNewSession: any
   isApp?: boolean
+  selectedEnvironment?: string
 }
 
 export interface ReduxProps {
