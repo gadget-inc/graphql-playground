@@ -388,7 +388,7 @@ class PlaygroundWrapper extends React.Component<
             backgroundColor: '#09141c',
           }}
         >
-        <select
+        <EnvironmentSelector
           className="ggt-env-selection"
           onChange={(data) => this.handleEnvironmentOnChange(data)}
         >
@@ -404,7 +404,7 @@ class PlaygroundWrapper extends React.Component<
           >
             Production
           </option>
-        </select>
+        </EnvironmentSelector>
       </div>
           <App>
             {this.props.config && this.state.activeEnv && (
@@ -616,4 +616,16 @@ const App = styled.div`
   opacity: 0;
   transform: translateY(10px);
   animation: ${appearIn} 0.5s ease-out forwards 0.2s;
+`
+
+const EnvironmentSelector = styled.select`
+  min-width: 120px;
+  margin-top: 10px;
+  margin-left: 10px;
+  border-radius: 2px;
+  padding: 2px 4px 2px 4px;
+  background: rgb(23, 43, 58);
+  font-weight: 550;
+  font-size: 12px;
+  color:  antiquewhite;
 `

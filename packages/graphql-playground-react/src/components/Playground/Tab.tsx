@@ -33,10 +33,7 @@ class Tab extends React.PureComponent<Props & ReduxProps, State> {
     }
   }
 
-  checkHeadersForEnvironment(h: string, activeSession) {
-    if (!activeSession) {
-      return;
-    }
+  checkHeadersForEnvironment(h: string) {
     
     const headers = JSON.parse(h);
     if (headers['x-gadget-environment']) {
@@ -44,7 +41,10 @@ class Tab extends React.PureComponent<Props & ReduxProps, State> {
     }
   }
 
-  updateSelectComponent(stateSetter, envName) {
+  updateSelectComponent(stateSetter, envName, active) {
+    if (!active) {
+      return;
+    }
     stateSetter(envName);
   }
 
@@ -60,9 +60,9 @@ class Tab extends React.PureComponent<Props & ReduxProps, State> {
       queryTypes.firstOperationName ||
       'New Tab'
 
-    const selectedEnvironment = this.checkHeadersForEnvironment(headers, session.id === selectedSessionId);
+    const selectedEnvironment = this.checkHeadersForEnvironment(headers);
     if (session.id === selectedSessionId) {
-      this.updateSelectComponent(setSelectedEnvironment, selectedEnvironment)
+      this.updateSelectComponent(setSelectedEnvironment, selectedEnvironment, active)
     }
 
     return (
@@ -173,10 +173,10 @@ const TabItem = styled<TabItemProps, 'div'>('div')`
   margin-right: 10px;
   font-size: 14px;
   border-radius: 2px;
-  border-bottom: 2px solid ${p => p.theme.editorColours.navigationBar};
   box-sizing: border-box;
   cursor: pointer;
   user-select: none;
+  border-bottom: ${p => p.active ? "none" : p.isProduction ? "4px solid #172b3a" : "none"}
   background: ${p => { 
     if (p.isProduction) {
       return "blue";
