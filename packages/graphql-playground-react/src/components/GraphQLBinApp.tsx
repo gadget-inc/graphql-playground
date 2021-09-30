@@ -2,7 +2,8 @@ import * as React from 'react'
 import { Provider, connect } from 'react-redux'
 import createStore from '../state/createStore'
 import 'isomorphic-fetch'
-import { styled } from '../styled'
+import EndpointPopup from './EndpointPopup'
+import { styled, ThemeProvider, theme as styledTheme } from '../styled'
 import { Store } from 'redux'
 import PlaygroundWrapper from './PlaygroundWrapper'
 import { injectState } from '../state/workspace/actions'
@@ -25,7 +26,7 @@ export interface Props {
   subscriptionEndpoint?: string
   history?: any
   match?: any
-  headers: any
+  headers?: any
 }
 
 export interface State {
@@ -90,8 +91,8 @@ class GraphQLBinApp extends React.Component<Props & ReduxProps, State> {
           variables: { id: this.props.match.params.id },
         }),
       })
-        .then((res) => res.json())
-        .then((res) => {
+        .then(res => res.json())
+        .then(res => {
           if (loadingWrapper) {
             loadingWrapper.classList.add('fadeOut')
           }
@@ -121,13 +122,34 @@ class GraphQLBinApp extends React.Component<Props & ReduxProps, State> {
 
     return (
       <Wrapper>
-        <PlaygroundWrapper />
+        {this.state.loading ? null : !this.state.endpoint ||
+        this.state.endpoint.length === 0 ? (
+          <ThemeProvider theme={styledTheme}>
+            <EndpointPopup
+              onRequestClose={this.handleChangeEndpoint}
+              endpoint={this.state.endpoint || ''}
+            />
+          </ThemeProvider>
+        ) : (
+          <PlaygroundWrapper
+            endpoint={endpoint}
+            headers={this.state.headers}
+            subscriptionEndpoint={subscriptionEndpoint}
+          />
+        )}
       </Wrapper>
     )
   }
-}
 
-const ConnectedGraphQLBinApp = connect(null, { injectState })(GraphQLBinApp)
+  private handleChangeEndpoint = endpoint => {
+    this.setState({ endpoint })
+    localStorage.setItem('last-endpoint', endpoint)
+  }
+}
+const ConnectedGraphQLBinApp = connect(
+  null,
+  { injectState },
+)(GraphQLBinApp)
 
 // tslint:disable
 export default class GraphQLBinAppHOC extends React.Component<Props> {

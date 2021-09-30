@@ -92,7 +92,8 @@ export interface Props {
   ) => ApolloLink
   workspaceName?: string
   schema?: GraphQLSchema
-  selectedEnvironment: string
+  selectedEnvironment?: string
+  setSelectedEnvironment?: (envName: string) => void
 }
 
 export interface ReduxProps {
@@ -277,7 +278,7 @@ export class Playground extends React.PureComponent<Props & ReduxProps, State> {
           props.settings['tracing.tracingSupported'],
       }
       const schema = await schemaFetcher.fetch(data)
-      schemaFetcher.subscribe(data, (newSchema) => {
+      schemaFetcher.subscribe(data, newSchema => {
         if (
           data.endpoint === this.props.endpoint ||
           data.endpoint === this.props.sessionEndpoint
@@ -311,7 +312,7 @@ export class Playground extends React.PureComponent<Props & ReduxProps, State> {
 
     return (
       <PlaygroundContainer className="playground">
-        <TabBar onNewSession={this.createSession} isApp={this.props.isApp} selectedEnvironment={this.props.selectedEnvironment} />
+        <TabBar onNewSession={this.createSession} isApp={this.props.isApp} selectedEnvironment={this.props.selectedEnvironment} setSelectedEnvironment={this.props.setSelectedEnvironment}  />
         <GraphiqlsContainer>
           <GraphiqlWrapper className="graphiql-wrapper active">
             {this.props.isConfigTab ? (
@@ -330,6 +331,7 @@ export class Playground extends React.PureComponent<Props & ReduxProps, State> {
                 shareEnabled={this.props.shareEnabled}
                 fixedEndpoint={this.props.fixedEndpoint}
                 schema={this.state.schema}
+                selectedEnvironment={this.props.selectedEnvironment}
               />
             )}
           </GraphiqlWrapper>

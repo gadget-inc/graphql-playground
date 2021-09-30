@@ -21,6 +21,7 @@ export interface Props {
   onNewSession: any
   isApp?: boolean
   selectedEnvironment?: string
+  setSelectedEnvironment?: (envName: string) => void
 }
 
 export interface ReduxProps {
@@ -39,7 +40,7 @@ class TabBar extends React.PureComponent<Props & ReduxProps, State> {
   state = { sorting: false }
 
   render() {
-    const { sessions, isApp, selectedSessionId, onNewSession } = this.props
+    const { sessions, isApp, selectedSessionId, onNewSession, setSelectedEnvironment } = this.props
     const { sorting } = this.state
     return (
       <SortableTabBar
@@ -53,14 +54,17 @@ class TabBar extends React.PureComponent<Props & ReduxProps, State> {
         transitionDuration={200}
       >
         <Tabs isApp={isApp}>
-          {sessions.map((session, ndx) => (
-            <SortableTab
-              key={session.id}
-              session={session}
-              selectedSessionId={selectedSessionId}
-              index={ndx}
-            />
-          ))}
+          {sessions.map((session, ndx) => {
+            return (
+              <SortableTab
+                key={session.id}
+                session={session}
+                selectedSessionId={selectedSessionId}
+                index={ndx}
+                setSelectedEnvironment={setSelectedEnvironment}
+              />
+            )
+            })}
           <Plus onClick={onNewSession} sorting={sorting}>
             <AddIcon
               width={34}

@@ -337,6 +337,24 @@ class PlaygroundWrapper extends React.Component<
     }
   }
 
+  handleEnvironmentOnChange(data: any) {
+    if (
+      data.target.value == 'Development' ||
+      data.target.value == 'Production'
+    ) {
+      this.setState({ selectedEnvironment: data.target.value })
+    }
+  }
+
+  setSelectedEnvironment = (envName: string) => {
+    if (
+      envName == 'Development' ||
+      envName == 'Production'
+    ) {
+      this.setState && this.setState({ selectedEnvironment: envName })
+    }
+  }
+
   render() {
     const title = this.props.setTitle ? (
       <Helmet>
@@ -371,14 +389,8 @@ class PlaygroundWrapper extends React.Component<
           }}
         >
         <select
-          onChange={(data) => {
-            if (
-              data.target.value == 'Development' ||
-              data.target.value == 'Production'
-            ) {
-              this.setState({ selectedEnvironment: data.target.value })
-            }
-          }}
+          className="ggt-env-selection"
+          onChange={(data) => this.handleEnvironmentOnChange(data)}
         >
           <option
             value="Development"
@@ -439,6 +451,7 @@ class PlaygroundWrapper extends React.Component<
               createApolloLink={this.props.createApolloLink}
               schema={this.state.schema}
               selectedEnvironment={this.state.selectedEnvironment}
+              setSelectedEnvironment={this.setSelectedEnvironment}
             />
           </App>
         </ThemeProvider>

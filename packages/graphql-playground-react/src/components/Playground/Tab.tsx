@@ -9,6 +9,7 @@ import AutosizeInput from 'react-input-autosize'
 export interface Props {
   session: Session
   selectedSessionId: string
+  setSelectedEnvironment?: (envName: string) => void
 }
 
 export interface ReduxProps {
@@ -32,13 +33,23 @@ class Tab extends React.PureComponent<Props & ReduxProps, State> {
     }
   }
 
-  checkHeadersForEnvironment(h: string) {
+  checkHeadersForEnvironment(h: string, activeSession) {
+    if (!activeSession) {
+      return;
+    }
+    
     const headers = JSON.parse(h);
-    if (headers['x-gadget-environment']) return headers['x-gadget-environment'];
+    if (headers['x-gadget-environment']) {
+      return headers['x-gadget-environment'];
+    }
+  }
+
+  updateSelectComponent(stateSetter, envName) {
+    stateSetter(envName);
   }
 
   render() {
-    const { session, selectedSessionId } = this.props
+    const { session, selectedSessionId, setSelectedEnvironment } = this.props
     const { queryTypes, headers } = session
 
     const active = session.id === selectedSessionId
@@ -49,10 +60,13 @@ class Tab extends React.PureComponent<Props & ReduxProps, State> {
       queryTypes.firstOperationName ||
       'New Tab'
 
-    const selectedEnvironment = this.checkHeadersForEnvironment(headers);
+    const selectedEnvironment = this.checkHeadersForEnvironment(headers, session.id === selectedSessionId);
+    if (session.id === selectedSessionId) {
+      this.updateSelectComponent(setSelectedEnvironment, selectedEnvironment)
+    }
 
     return (
-      <TabItem active={active} onMouseDown={this.handleSelectSession} isProduction={selectedEnvironment == "Production"}>
+      <TabItem active={active} onMouseDown={this.handleSelectSession} isProduction={selectedEnvironment === "Production"}>
         <Icons active={active}>
           {session.subscriptionActive && <RedDot />}
           <QueryTypes>
@@ -164,13 +178,17 @@ const TabItem = styled<TabItemProps, 'div'>('div')`
   cursor: pointer;
   user-select: none;
   background: ${p => { 
-    if (p.isProduction) return "blue";
-      return p.active ? p.theme.editorColours.tab : p.theme.editorColours.tabInactive;
+    if (p.isProduction) {
+      return "blue";
     }
+    return p.active ? p.theme.editorColours.tab : p.theme.editorColours.tabInactive;
+  }
   };
   &:hover {
     background: ${p => {
-      if (p.isProduction) return "blue";
+      if (p.isProduction) {
+        return "blue";
+      }
       return p.theme.editorColours.tab;
     }};
     .close {

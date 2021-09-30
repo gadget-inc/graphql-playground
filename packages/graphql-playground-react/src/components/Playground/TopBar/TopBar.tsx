@@ -32,6 +32,7 @@ export interface Props {
   isPollingSchema: boolean
   endpointUnreachable: boolean
   session: Session
+  isProduction: boolean
 
   editEndpoint: (value: string) => void
   prettifyQuery: () => void
@@ -53,7 +54,7 @@ class TopBar extends React.Component<Props, {}> {
   render() {
     const { endpointUnreachable, settings } = this.props
     return (
-      <TopBarWrapper>
+      <TopBarWrapper isProduction={this.props.isProduction}>
         <Button onClick={this.props.prettifyQuery}>Prettify</Button>
         <Button onClick={this.openHistory}>History</Button>
         <UrlBarWrapper>
@@ -198,8 +199,13 @@ export const Button = styled.button`
 
 const TopBarWrapper = styled.div`
   display: flex;
-  background: ${p => p.theme.editorColours.navigationBar};
-  padding: 10px 10px 4px;
+  background: ${p => {
+    if (p.isProduction) {
+      return "blue"
+    }
+    return p.theme.editorColours.navigationBar
+  }};
+  padding: 10px 10px 10px;
   align-items: center;
 `
 

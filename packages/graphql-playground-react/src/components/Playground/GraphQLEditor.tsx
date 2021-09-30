@@ -79,6 +79,7 @@ export interface Props {
   shareEnabled?: boolean
   fixedEndpoint?: boolean
   schema?: GraphQLSchema
+  selectedEnvironment?: string
 }
 
 export interface ReduxProps {
@@ -170,12 +171,23 @@ class GraphQLEditor extends React.PureComponent<Props & ReduxProps> {
     }
   }
 
+  checkHeadersForEnvironment() {
+    const headers = JSON.parse(this.props.headers);
+    if (headers['x-gadget-environment']) {
+      return headers['x-gadget-environment'];
+    }
+  }
+
   render() {
+
+    const isProduction = this.checkHeadersForEnvironment() === "Production"
+
     return (
       <Container ref={this.setContainerComponent}>
         <EditorWrapper>
           <TopBar
             shareEnabled={this.props.shareEnabled}
+            isProduction={isProduction}
           />
           <EditorBar
             ref={this.setEditorBarComponent}
