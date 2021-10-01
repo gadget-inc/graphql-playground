@@ -276,7 +276,7 @@ export class Playground extends React.PureComponent<Props & ReduxProps, State> {
           props.settings['tracing.tracingSupported'],
       }
       const schema = await schemaFetcher.fetch(data)
-      schemaFetcher.subscribe(data, newSchema => {
+      schemaFetcher.subscribe(data, (newSchema) => {
         if (
           data.endpoint === this.props.endpoint ||
           data.endpoint === this.props.sessionEndpoint
@@ -419,24 +419,21 @@ const mapStateToProps = createStructuredSelector({
   sessionEndpoint: getEndpoint,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    selectTabIndex,
-    selectNextTab,
-    selectPrevTab,
-    newSession,
-    closeSelectedTab,
-    initState,
-    saveSettings,
-    saveConfig,
-    setTracingSupported,
-    injectHeaders,
-    setConfigString,
-    schemaFetchingError,
-    schemaFetchingSuccess,
-  },
-)(Playground)
+export default connect(mapStateToProps, {
+  selectTabIndex,
+  selectNextTab,
+  selectPrevTab,
+  newSession,
+  closeSelectedTab,
+  initState,
+  saveSettings,
+  saveConfig,
+  setTracingSupported,
+  injectHeaders,
+  setConfigString,
+  schemaFetchingError,
+  schemaFetchingSuccess,
+})(Playground)
 
 const PlaygroundContainer = styled.div`
   flex: 1;
@@ -450,7 +447,7 @@ const PlaygroundContainer = styled.div`
   margin-right: -1px !important;
 
   line-height: 1.5;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Inconsolata', monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: 0.53px;

@@ -101,10 +101,10 @@ class TopBar extends React.Component<Props, {}> {
     const curl = this.getCurl()
     copy(curl)
   }
-  onChange = e => {
+  onChange = (e) => {
     this.props.editEndpoint(e.target.value)
   }
-  onKeyDown = e => {
+  onKeyDown = (e) => {
     if (e.keyCode === 13) {
       this.props.refetchSchema()
     }
@@ -143,14 +143,12 @@ class TopBar extends React.Component<Props, {}> {
       ...sessionHeaders,
     }
     const headersString = Object.keys(headers)
-      .map(key => {
+      .map((key) => {
         const value = headers[key]
         return `-H '${key}: ${value}'`
       })
       .join(' ')
-    return `curl '${
-      session.endpoint
-    }' ${headersString} --data-binary '${data}' --compressed`
+    return `curl '${session.endpoint}' ${headersString} --data-binary '${data}' --compressed`
   }
 }
 
@@ -163,26 +161,24 @@ const mapStateToProps = createStructuredSelector({
   session: getSelectedSession,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    editEndpoint,
-    prettifyQuery,
-    openHistory,
-    share,
-    refetchSchema,
-  },
-)(TopBar)
+export default connect(mapStateToProps, {
+  editEndpoint,
+  prettifyQuery,
+  openHistory,
+  share,
+  refetchSchema,
+})(TopBar)
 
 export const Button = styled.button`
   text-transform: uppercase;
-  font-weight: 600;
-  color: ${p => p.theme.editorColours.buttonText};
-  background: ${p => p.theme.editorColours.button};
+  font-weight: 700;
+  color: ${(p) => p.theme.editorColours.buttonText};
+  background: ${(p) => p.theme.editorColours.button};
   border-radius: 2px;
   flex: 0 0 auto;
   letter-spacing: 0.53px;
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 20px;
   padding: 6px 9px 7px 10px;
   margin-left: 6px;
 
@@ -192,13 +188,13 @@ export const Button = styled.button`
     margin-left: 0;
   }
   &:hover {
-    background-color: ${p => p.theme.editorColours.buttonHover};
+    background-color: ${(p) => p.theme.editorColours.buttonHover};
   }
 `
 
 const TopBarWrapper = styled.div`
   display: flex;
-  background: ${p => p.theme.editorColours.navigationBar};
+  background: ${(p) => p.theme.editorColours.navigationBar};
   padding: 10px 10px 4px;
   align-items: center;
 `
@@ -208,13 +204,13 @@ interface UrlBarProps {
 }
 
 const UrlBar = styled<UrlBarProps, 'input'>('input')`
-  background: ${p => p.theme.editorColours.button};
+  background: ${(p) => p.theme.editorColours.button};
   border-radius: 4px;
-  color: ${p =>
+  color: ${(p) =>
     p.active
       ? p.theme.editorColours.navigationBarText
       : p.theme.editorColours.textInactive};
-  border: 1px solid ${p => p.theme.editorColours.background};
+  border: 1px solid ${(p) => p.theme.editorColours.background};
   padding: 6px 12px;
   padding-left: 30px;
   font-size: 13px;
@@ -240,7 +236,7 @@ const ReachError = styled.div`
 const Pulse = styled.div`
   width: 16px;
   height: 16px;
-  background-color: ${p => p.theme.editorColours.icon};
+  background-color: ${(p) => p.theme.editorColours.icon};
   border-radius: 100%;
 `
 

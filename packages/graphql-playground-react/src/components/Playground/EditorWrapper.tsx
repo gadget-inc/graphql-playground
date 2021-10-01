@@ -4,77 +4,77 @@ import { styled, createGlobalStyle } from '../../styled'
 const EditorWrapper = styled.div`
   /* Comment */
   .cm-comment {
-    color: ${p => p.theme.editorColours.comment};
+    color: ${(p) => p.theme.editorColours.comment};
   }
 
   /* Punctuation */
   .cm-punctuation {
-    color: ${p => p.theme.editorColours.punctuation};
+    color: ${(p) => p.theme.editorColours.punctuation};
   }
 
   /* Proppery */
   .cm-property {
-    color: ${p => p.theme.editorColours.property};
+    color: ${(p) => p.theme.editorColours.property};
   }
 
   /* Keyword */
   .cm-keyword {
-    color: ${p => p.theme.editorColours.keyword};
+    color: ${(p) => p.theme.editorColours.keyword};
   }
 
   /* OperationName, FragmentName */
   .cm-def {
-    color: ${p => p.theme.editorColours.def};
+    color: ${(p) => p.theme.editorColours.def};
   }
 
   /* FieldAlias */
   .cm-qualifier {
-    color: ${p => p.theme.editorColours.def};
+    color: ${(p) => p.theme.editorColours.def};
   }
 
   /* ArgumentName and ObjectFieldName */
   .cm-attribute {
-    color: ${p => p.theme.editorColours.attribute};
+    color: ${(p) => p.theme.editorColours.attribute};
   }
 
   /* Number */
   .cm-number {
-    color: ${p => p.theme.editorColours.number};
+    color: ${(p) => p.theme.editorColours.number};
   }
 
   /* String */
   .cm-string {
-    color: ${p => p.theme.editorColours.string};
+    color: ${(p) => p.theme.editorColours.string};
   }
 
   /* Boolean */
   .cm-builtin {
-    color: ${p => p.theme.editorColours.builtin};
+    color: ${(p) => p.theme.editorColours.builtin};
   }
 
   /* EnumValue */
   .cm-string-2 {
-    color: ${p => p.theme.editorColours.string2};
+    color: ${(p) => p.theme.editorColours.string2};
   }
 
   /* Variable */
   .cm-variable {
-    color: ${p => p.theme.editorColours.variable};
+    color: ${(p) => p.theme.editorColours.variable};
   }
 
   /* Directive */
   .cm-meta {
-    color: ${p => p.theme.editorColours.meta};
+    color: ${(p) => p.theme.editorColours.meta};
   }
 
   /* Type */
   .cm-atom {
-    color: ${p => p.theme.editorColours.atom};
+    color: ${(p) => p.theme.editorColours.atom};
   }
 
   /* Comma */
   .cm-ws {
-    color: ${p => p.theme.editorColours.ws};
+    color: ${(p) => p.theme.editorColours.ws};
   }
   position: relative;
   display: flex;
@@ -83,8 +83,8 @@ const EditorWrapper = styled.div`
 
   .CodeMirror {
     color: rgba(255, 255, 255, 0.3);
-    font-family: ${p => p.theme.settings['editor.fontFamily']};
-    font-size: ${p => `${p.theme.settings['editor.fontSize']}px`};
+    font-family: ${(p) => p.theme.settings['editor.fontFamily']};
+    font-size: ${(p) => `${p.theme.settings['editor.fontSize']}px`};
     height: 100%;
     left: 0;
     position: absolute;
@@ -101,21 +101,21 @@ const EditorWrapper = styled.div`
   }
 
   .CodeMirror span[role='presentation'] {
-    color: ${p => p.theme.colours.text};
+    color: ${(p) => p.theme.colours.text};
   }
 
   /* CURSOR */
 
   .CodeMirror div.CodeMirror-cursor {
-    background: ${p =>
+    background: ${(p) =>
       p.theme.settings['editor.cursorShape'] === 'block'
         ? p.theme.editorColours.cursorColor
         : 'transparent'};
-    border-left: ${p =>
+    border-left: ${(p) =>
       p.theme.settings['editor.cursorShape'] === 'line'
         ? `1px solid ${p.theme.editorColours.cursorColor}`
         : 0};
-    border-bottom: ${p =>
+    border-bottom: ${(p) =>
       p.theme.settings['editor.cursorShape'] === 'underline'
         ? `1px solid ${p.theme.editorColours.cursorColor}`
         : 0};
@@ -268,13 +268,13 @@ const EditorWrapper = styled.div`
     white-space: nowrap;
   }
   .CodeMirror-linenumbers {
-    background: ${p => p.theme.editorColours.editorBackground};
+    background: ${(p) => p.theme.editorColours.editorBackground};
   }
   .CodeMirror-linenumber {
-    font-family: Open Sans, sans-serif;
+    font-family: 'Inconsolata', monospace;
     font-weight: 600;
-    font-size: ${p => `${p.theme.settings['editor.fontSize'] - 2}px`};
-    color: ${p => p.theme.colours.textInactive};
+    font-size: ${(p) => `${p.theme.settings['editor.fontSize'] - 2}px`};
+    color: ${(p) => p.theme.colours.textInactive};
     min-width: 20px;
     padding: 0 3px 0 5px;
     text-align: right;
@@ -525,10 +525,10 @@ const EditorWrapper = styled.div`
   }
 
   .CodeMirror-selected {
-    background: ${p => p.theme.editorColours.selection};
+    background: ${(p) => p.theme.editorColours.selection};
   }
   .CodeMirror-focused .CodeMirror-selected {
-    background: ${p => p.theme.editorColours.selection};
+    background: ${(p) => p.theme.editorColours.selection};
   }
   .CodeMirror-crosshair {
     cursor: crosshair;
@@ -536,17 +536,17 @@ const EditorWrapper = styled.div`
   .CodeMirror-line::-moz-selection,
   .CodeMirror-line > span::-moz-selection,
   .CodeMirror-line > span > span::-moz-selection {
-    background: ${p => p.theme.editorColours.selection};
+    background: ${(p) => p.theme.editorColours.selection};
   }
   .CodeMirror-line::selection,
   .CodeMirror-line > span::selection,
   .CodeMirror-line > span > span::selection {
-    background: ${p => p.theme.editorColours.selection};
+    background: ${(p) => p.theme.editorColours.selection};
   }
   .CodeMirror-line::-moz-selection,
   .CodeMirror-line > span::-moz-selection,
   .CodeMirror-line > span > span::-moz-selection {
-    background: ${p => p.theme.editorColours.selection};
+    background: ${(p) => p.theme.editorColours.selection};
   }
 
   .cm-searching {
@@ -612,12 +612,12 @@ const EditorWrapper = styled.div`
   }
 
   .CodeMirror-dialog span.CodeMirror-search-label {
-    color: ${p => p.theme.colours.text};
+    color: ${(p) => p.theme.colours.text};
   }
 
   .CodeMirror-dialog input.CodeMirror-search-field {
-    color: ${p => p.theme.colours.text};
-    background: ${p => p.theme.colours.background};
+    color: ${(p) => p.theme.colours.text};
+    background: ${(p) => p.theme.colours.background};
   }
 
   .CodeMirror-dialog button {
@@ -684,7 +684,7 @@ const GlobalStyle = createGlobalStyle`
     border-radius: 4px 4px 4px 4px;
     border: 1px solid black;
     color: #09141C;
-    font-family: Open Sans, monospace;
+    font-family: 'Inconsolata', monospace;
     font-size: 14px;
     max-width: 600px;
     opacity: 0;
@@ -804,7 +804,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .CodeMirror-hints-wrapper {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Inconsolata', monospace;
     background: white;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
     margin-left: -6px;
@@ -903,10 +903,10 @@ const GraphqlContainer = styled.div`
   color: #141823;
   display: flex;
   flex-direction: row;
-  font-family: system, -apple-system, 'San Francisco', '.SFNSDisplay-Regular',
-    'Segoe UI', Segoe, 'Segoe WP', 'Helvetica Neue', helvetica, 'Lucida Grande',
-    arial, sans-serif;
-  font-size: 14px;
+  font-family: 'Inconsolata', monospace;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 700;
   height: 100%;
   margin: 0;
   overflow: hidden;
@@ -928,7 +928,7 @@ export class Container extends React.PureComponent {
     return this.graphqlContainer.offsetWidth
   }
 
-  private setGraphqlContainer = ref => {
+  private setGraphqlContainer = (ref) => {
     this.graphqlContainer = ref
   }
 }
